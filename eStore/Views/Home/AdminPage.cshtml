@@ -1,0 +1,8 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "AdminPage";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>AdminPage</h1>
+<h1>Welcome back: @Context.Session.GetString("email")</h1>
