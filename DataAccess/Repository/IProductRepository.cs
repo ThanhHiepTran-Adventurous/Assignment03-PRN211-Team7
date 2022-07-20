@@ -10,8 +10,8 @@ namespace DataAccess.Repository
     {
         IEnumerable<Product> GetProducts();
 
-        void createProduct(Product product);
-        void updateProduct(Product product);
+        void createProduct(Product pro);
+        void updateProduct(Product pro);
         void deleteProduct(Product product);
         void deleteProductById(int productId);
 
