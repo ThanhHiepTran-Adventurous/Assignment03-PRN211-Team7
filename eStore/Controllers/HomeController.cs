@@ -43,6 +43,12 @@ namespace eStore.Controllers
             return View("Login");
         }
 
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
+        }
+
         public IActionResult CheckLogin(Member mem)
         {
             var adminDefaultSettings = Program.Configuration.GetSection("AdminAccount").Get<DefaultAccount>();
