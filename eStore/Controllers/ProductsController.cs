@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using BusinessObject.Models;
 using DataAccess.Repository;
 using System;
+using System.Collections.Generic;
 
 namespace eStore.Controllers
 {
@@ -29,7 +30,7 @@ namespace eStore.Controllers
             var product = _productRepository.getProductById(id);
             if(product == null)
             {
-                return NotFound(
+                return NotFound();
             }
             return View(product);
         }
@@ -100,24 +101,59 @@ namespace eStore.Controllers
         }
 
         // GET: ProductsController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View();
+            if(id == null)
+            {
+                return NotFound();
+            }
+            var pro = _productRepository.getProductById(id.ToString());
+            if(pro == null)
+            {
+                return NotFound();
+            }
+            return View(pro);
         }
 
         // POST: ProductsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
             try
             {
+                _productRepository.deleteProductById(id);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return View();
+            }
+        }
+
+        public ActionResult Search()
+        {
+            string search = Request.Form["txtSearch"];
+            string type = Request.Form["type"];
+            if(search != null && type.Equals("1"))
+            {
+                List<Product> listProduct = _productRepository.getProductByName(search);
+                return View(listProduct);
+            }else if(search != null && type.Equals("2"))
+            {
+                List<Product> listProduct = _productRepository.getProductByUnitPrice(search);
+                return View(listProduct);
+            }else if (search != null && type.Equals("3"))
+            {
+                List<Product> listProduct = _productRepository.getProductByUnitsSlnStock(search);
+                return View(listProduct);
+            }      
+            else
             {
                 return View();
             }
+            
         }
     }
 }

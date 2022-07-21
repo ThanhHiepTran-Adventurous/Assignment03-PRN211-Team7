@@ -29,20 +29,14 @@ namespace DataAccess.Repository
         public Product getProductById(string productId) => ProductDAO.GetProductById(productId);
         
 
-        public List<Product> getProductByName(string productName)
-        {
-            throw new NotImplementedException();
-        }
+        public List<Product> getProductByName(string productName) => ProductDAO.getProductByName(productName);
+       
 
-        public List<Product> getProductByUnitPrice(string unitPrice)
-        {
-            throw new NotImplementedException();
-        }
+        public List<Product> getProductByUnitPrice(string unitPrice) => ProductDAO.getProductByUnitPrice(unitPrice);
+       
 
-        public List<Product> getProductByUnitsSlnStock(string unitSlnStock)
-        {
-            throw new NotImplementedException();
-        }
+        public List<Product> getProductByUnitsSlnStock(string unitSlnStock) => ProductDAO.getProductByUnitsSlnStock(unitSlnStock);
+        
 
        
     }

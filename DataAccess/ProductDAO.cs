@@ -72,10 +72,16 @@ namespace DataAccess
         {
             try
             {
+                Product _pro = GetProductById(pro.ProductId.ToString());
+                if (_pro != null)
+                {
                     SalesManagementDBContext dbContext = new SalesManagementDBContext();
                     dbContext.Products.Update(pro);
                     dbContext.SaveChanges();
-                
+                }else
+                {
+                    throw new Exception("The product does not alread exist");
+                }                      
             }catch(Exception ex)
             {
                 throw new Exception(ex.Message);
@@ -98,6 +104,56 @@ namespace DataAccess
             {
                 throw new Exception(ex.Message);
             }
+        }
+        //------------------------------------------------------------------------
+        public static List<Product> getProductByName(string proName)
+        {
+            List<Product> listPro = null;
+            try{
+                using(var context = new SalesManagementDBContext())
+                {
+                    listPro = context.Products.Where(pro => pro.ProductName.ToLower().Contains(proName.ToLower())).ToList();
+                }
+
+            }catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return listPro;
+        }
+        public static List<Product> getProductByUnitPrice(string unitPrice)
+        {
+            List<Product> listPro = null;
+            try
+            {
+                using (var dbContext = new SalesManagementDBContext())
+                {
+                    listPro = dbContext.Products.Where(product => product.UnitPrice.ToString().Contains(unitPrice.ToLower())).ToList();
+                }
+
+            }catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return listPro;
+        }
+
+        public static List<Product> getProductByUnitsSlnStock(string unitSlnStock)
+        {
+            List<Product> listPro = null;
+            try
+            {
+                using (var dbContext = new SalesManagementDBContext())
+                {
+                    listPro = dbContext.Products.Where(product => product.UnitslnStock.ToString().Contains(unitSlnStock.ToLower())).ToList();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return listPro;
         }
     }
 }
